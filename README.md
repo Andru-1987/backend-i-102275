@@ -1,4 +1,5 @@
-*Sistema Backend usando NodeJs**
+# Sistema Backend usando NodeJs
+
 El trayecto abarca desde los fundamentos de la arquitectura no bloqueante de **Node.js** y la creación de servidores con **Express**, hasta la implementación de una **arquitectura en capas profesional** (Routers, Controllers, Services, Repositories y DAO). A lo largo del programa, la persistencia evoluciona desde archivos locales JSON con **FileSystem** hacia una base de datos NoSQL en la nube con **MongoDB Atlas y Mongoose**, integrando además **validaciones con Zod/Joi**, **vistas dinamizadas con Handlebars** y **comunicación en tiempo real con Socket.io**.
 
 ---
