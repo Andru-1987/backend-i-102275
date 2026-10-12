@@ -16,3 +16,4 @@
     * *Dinámica*: Presentación de 3 formas distintas de organizar el directorio `src/` y `config/`.
     * *Acción*: Discusión en sub-salas sobre cuál esquema resulta más mantenible a medida que el proyecto escala.
     * *Cierre*: Síntesis del instructor sobre los beneficios de la arquitectura modular estructurada por sobre la organización plana.
+
