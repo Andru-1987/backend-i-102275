@@ -330,78 +330,56 @@ server.listen(3000, () => console.log('Servidor en puerto 3000'));
 1. Abre dos pestañas o terminales. Haz una petición a `/heavy` e inmediatamente otra a `/ping`. ¿Qué sucede con la petición a `/ping`? ¿Por qué se congela si Node.js es "asíncrono"?
 2. **Solución en vivo:** Refactorizar la tarea pesada utilizando el módulo **`node:worker_threads`** o **`node:cluster`** para liberar la hebra principal del servidor.
 
+***
 
-
-En el código original, el bucle `for` de $5 \times 10^9$ operaciones congela la hebra principal (*Main Thread*), impidiendo que el servidor procese peticiones ligeras como `/ping`.
-
-### 1. `worker.js` (Tarea Pesada)
-
-```javascript
-import { parentPort } from 'node:worker_threads';
-
-function calcularEstadisticasPesadas() {
-  let count = 0;
-  for (let i = 0; i < 5e9; i++) {
-    count += i;
-  }
-  return count;
-}
-
-// Ejecutar el cálculo y enviar el resultado al hilo principal
-const resultado = calcularEstadisticasPesadas();
-parentPort.postMessage(resultado);
-
-```
-
-### 2. `server.js` (Servidor Refactorizado)
-
-```javascript
+```js
 import http from 'node:http';
 import { Worker } from 'node:worker_threads';
-import { fileURLToPath } from 'node:url';
-import path from 'node:path';
+import { once } from 'node:events';
 
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = path.dirname(__filename);
+const ITERACIONES = 5e9; // ajustalo para que tarde 3-5 segundos en tu máquina
 
-function ejecutarCalculoEnWorker() {
-  return new Promise((resolve, reject) => {
-    const worker = new Worker(path.join(__dirname, 'worker.js'));
+const calculoPesado = `
+  const { parentPort } = require('node:worker_threads');
+  let suma = 0;
+  for (let i = 0; i < ${ITERACIONES}; i++) suma += i;
+  parentPort.postMessage(suma);
+`;
 
-    worker.on('message', (data) => resolve(data));
-    worker.on('error', (err) => reject(err));
-    worker.on('exit', (code) => {
-      if (code !== 0) reject(new Error(`Worker finalizado con código ${code}`));
-    });
-  });
-}
+http.createServer(async (req, res) => {
+  // Bloqueante: el cálculo corre en el hilo principal
+  if (req.url === '/heavyBlocker') {
+    let suma = 0;
+    for (let i = 0; i < ITERACIONES; i++) suma += i;
+    return res.end(`Resultado (bloqueante): ${suma}`);
+  }
 
-const server = http.createServer(async (req, res) => {
+  // No bloqueante: el cálculo corre en un worker thread
   if (req.url === '/heavy') {
-    try {
-      // Se delega el cálculo a un worker thread no bloqueante
-      const result = await ejecutarCalculoEnWorker();
-      res.writeHead(200, { 'Content-Type': 'text/plain' });
-      return res.end(`Resultado: ${result}`);
-    } catch (err) {
-      res.writeHead(500, { 'Content-Type': 'text/plain' });
-      return res.end(`Error interno: ${err.message}`);
-    }
+    const worker = new Worker(calculoPesado, { eval: true });
+    const [resultado] = await once(worker, 'message');
+    return res.end(`Resultado (worker): ${resultado}`);
   }
 
-  if (req.url === '/ping') {
-    res.writeHead(200, { 'Content-Type': 'text/plain' });
-    return res.end('pong (¡respuesta inmediata!)');
-  }
+  if (req.url === '/ping') return res.end('pong');
 
-  res.writeHead(404);
-  res.end('Not Found');
-});
-
-server.listen(3000, () => {
-  console.log('Servidor corriendo en http://localhost:3000');
-});
-
+  res.writeHead(404).end('Not Found');
+}).listen(3000, () => console.log('http://localhost:3000'));
 ```
 
-**Resultado:** Al realizar la petición a `/heavy`, el cálculo se ejecuta en un hilo secundario sin bloquear el hilo de eventos. Una petición a `/ping` responderá inmediatamente en milisegundos.
+**Demostración en clase:**
+
+1. Abrí `/heavyBlocker` y, mientras carga, abrí `/ping` en otra pestaña. `/ping` queda colgado hasta que termina el cálculo, porque el event loop está ocupado.
+2. Repetí con `/heavy` y luego `/ping`. Ahora `/ping` responde al instante, porque el cálculo corre en otro hilo.
+
+Para hacerlo más visual desde la terminal, podés lanzar ambas peticiones juntas y medir tiempos:
+
+```bash
+# Bloqueante: /ping tarda varios segundos
+curl http://localhost:3000/heavyBlocker & time curl http://localhost:3000/ping
+
+# No bloqueante: /ping responde de inmediato
+curl http://localhost:3000/heavy & time curl http://localhost:3000/ping
+```
+
+Un detalle para tener en cuenta: los navegadores a veces serializan peticiones a la misma URL o reutilizan conexiones, así que `curl` suele dar una demostración más limpia que las pestañas.
