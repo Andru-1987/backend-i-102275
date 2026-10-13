@@ -1,4 +1,4 @@
-##Ejercicio
+## Ejercicio
 
 * **Nombre de la clase**: Sesión en Vivo: Consolidación de Fundamentos Backend con Node.js.
 * **Temario a ver (Temas a cubrir)**:

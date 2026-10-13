@@ -1,0 +1,11 @@
+{
+  "name": "clase-01-practica",
+  "version": "1.0.0",
+  "description": "My app for the first class of the backend course",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "keywords": [],
+  "type": "module"
+}
