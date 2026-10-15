@@ -1,0 +1,11 @@
+{
+  "name": "clase-02-practica",
+  "version": "1.0.0",
+  "description": "",
+  "main": "app.js",
+  "scripts": {
+    "start": "node --watch --env-file=.env app.js"
+  },
+  "keywords": [],
+  "type": "module"
+}
