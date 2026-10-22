@@ -1,0 +1,29 @@
+[
+  {
+    "id": 2,
+    "name": "Manicura",
+    "description": "Manicura completa con esmaltado",
+    "duration": 45,
+    "price": 4500,
+    "category": "Estetica",
+    "available": true
+  },
+  {
+    "id": 3,
+    "name": "Masaje descontracturante",
+    "description": "Sesion de masaje corporal de 60 minutos",
+    "duration": 60,
+    "price": 8000,
+    "category": "Bienestar",
+    "available": false
+  },
+  {
+    "name": "test",
+    "description": "test",
+    "duration": 60,
+    "price": 8000,
+    "category": "test",
+    "available": true,
+    "id": 4
+  }
+]
