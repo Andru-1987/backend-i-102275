@@ -1,0 +1,92 @@
+[
+  {
+    "id": 1,
+    "name": "Limpieza facial profunda",
+    "description": "Tratamiento de hidratación y extracción de impurezas",
+    "duration": 60,
+    "price": 7500,
+    "category": "Estetica",
+    "available": true
+  },
+  {
+    "id": 1,
+    "name": "Updated service",
+    "description": "Tratamiento de hidratación y extracción de impurezas",
+    "duration": 60,
+    "price": 7500,
+    "category": "Estetica",
+    "available": true
+  },
+  {
+    "id": 3,
+    "name": "Masaje descontracturante",
+    "description": "Sesión de masaje corporal enfocado en aliviar tensiones",
+    "duration": 60,
+    "price": 8000,
+    "category": "Bienestar",
+    "available": false
+  },
+  {
+    "id": 4,
+    "name": "Pedicura spa",
+    "description": "Tratamiento completo para pies con exfoliación y esmaltado",
+    "duration": 50,
+    "price": 5500,
+    "category": "Estetica",
+    "available": true
+  },
+  {
+    "id": 5,
+    "name": "Masaje relajante con piedras calientes",
+    "description": "Terapia corporal relajante para reducir el estrés",
+    "duration": 75,
+    "price": 9500,
+    "category": "Bienestar",
+    "available": true
+  },
+  {
+    "id": 6,
+    "name": "Perfilado y laminado de cejas",
+    "description": "Diseño de cejas personalizado con efecto de volumen",
+    "duration": 40,
+    "price": 3800,
+    "category": "Estetica",
+    "available": true
+  },
+  {
+    "id": 7,
+    "name": "Drenaje linfático manual",
+    "description": "Masaje terapéutico para reducir la retención de líquidos",
+    "duration": 60,
+    "price": 8500,
+    "category": "Bienestar",
+    "available": true
+  },
+  {
+    "id": 8,
+    "name": "Extensiones de pestañas pelo a pelo",
+    "description": "Aplicación de pestañas para una mirada más definida",
+    "duration": 90,
+    "price": 12000,
+    "category": "Estetica",
+    "available": false
+  },
+  {
+    "id": 9,
+    "name": "Exfoliación corporal e hidratación",
+    "description": "Renovación celular de la piel con cremas nutritivas",
+    "duration": 45,
+    "price": 6000,
+    "category": "Estetica",
+    "available": true
+  },
+  {
+    "id": 10,
+    "name": "Sesión de reflexología podal",
+    "description": "Masaje en puntos de presión de los pies para el equilibrio corporal",
+    "duration": 45,
+    "price": 5000,
+    "category": "Bienestar",
+    "available": true
+  }
+]
