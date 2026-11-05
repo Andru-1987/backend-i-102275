@@ -3,6 +3,8 @@ import { readFile, writeFile } from "node:fs/promises";
 export default class BookingManager {
   constructor(databasePath) {
     this.databasePath = databasePath;
+    console.log(`BookingManager inicializado con base de datos: ${this.databasePath}`);
+
   }
 
   async #read() {
