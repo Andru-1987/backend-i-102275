@@ -323,6 +323,8 @@ const server = http.createServer((req, res) => {
 
 server.listen(3000, () => console.log('Servidor en puerto 3000'));
 
+
+curl http://localhost:3000/heavyBlocker & time curl http://localhost:3000/ping
 ```
 
 **Desafío para la clase:**

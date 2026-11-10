@@ -19,7 +19,7 @@ app.use('/api/v1/services', apiServicesRouter)
 //middleware de salida de tracking de error
 app.use((error, _, response, next) => {
     response.status(error.status || 500).json(
-        { error: error.messaje || 'Error interno del server' }
+        { error: error.message || 'Error interno del server' }
     )
 })
 
