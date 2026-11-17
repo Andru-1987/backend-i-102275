@@ -1,69 +1,74 @@
 import ApiResponse from "../utils/apiResponse.js";
-import {NotFoundError} from "../errors/appErrors.js";
+import { NotFoundError } from "../errors/appErrors.js";
 
 export default class ServiceController {
+  constructor(servicesService) {
+    this.servicesService = servicesService;
+  }
+
+  getAll = async (request, response) => {
+    const { category, available } = request.query;
+    const services = await this.servicesService.getServices({
+      category,
+      available,
+    });
+
+    return ApiResponse.sendSuccess(
+      response,
+      services,
+      "Servicios obtenidos correctamente",
+    );
+  };
+
+  getById = async (request, response) => {
+    const serviceId = Number(request.params.id);
     
-    constructor(serviceManager) {
-        console.log('ServiceController inicializado', serviceManager)
-        this.serviceManager = serviceManager
-    }
+    const serviceItem = await this.servicesService.getServiceById(serviceId);
 
-    getAll = async (request, response) => {
-        let services = await this.serviceManager.getServices()
-        const { category, available } = request.query
+    if (!serviceItem) throw new NotFoundError("Servicio no encontrado");
 
-        if (category) {
-            services = services.filter(s => s.category.toLowerCase() === category.toLowerCase())
-        }
+    return ApiResponse.sendSuccess(
+      response,
+      serviceItem,
+      "Servicio obtenido correctamente",
+    );
+  };
 
-        if (available !== undefined) {
-            const isAvailable = available === 'true'
-            services = services.filter(s => s.available === isAvailable)
-        }
+  create = async (request, response) => {
+    const newService = await this.servicesService.createService(request.body);
+    return ApiResponse.sendCreated(
+      response,
+      newService,
+      "Servicio creado correctamente",
+    );
+  };
 
-        return ApiResponse.sendSuccess(response, services, 'Servicios obtenidos correctamente')
-    }
+  update = async (request, response) => {
+    const serviceId = Number(request.params.id);
+    const updatedService = await this.servicesService.updateService(
+      serviceId,
+      request.body,
+    );
 
-    getById = async (request, response) => {
-        const serviceId = Number(request.params.sid)
-        const serviceItem = await this.serviceManager.getServiceById(serviceId)
+    if (!updatedService) throw new NotFoundError("Servicio no encontrado");
 
-        if (!serviceItem) throw new NotFoundError('Servicio no encontrado')
+    return ApiResponse.sendUpdated(
+      response,
+      updatedService,
+      "Servicio actualizado correctamente",
+    );
+  };
 
-        return ApiResponse.sendSuccess(response, serviceItem, 'Servicio obtenido correctamente')
-    }
+  delete = async (request, response) => {
+    const serviceId = Number(request.params.sid);
+    const deletedService = await this.servicesService.deleteService(serviceId);
 
-    create = async (request, response) => {
-        const { name, description, duration, price, category, available } = request.body
-        const newService = await this.serviceManager.addService({
-            name,
-            description,
-            duration,
-            price,
-            category,
-            available
-        })
-        return ApiResponse.sendCreated(response, newService, 'Servicio creado correctamente')
-    }
+    if (!deletedService) throw new NotFoundError("Servicio no encontrado");
 
-    update = async (request, response) => {
-        const serviceId = Number(request.params.sid)
-        const updateServiceFields = request.body
-        const updatedService = await this.serviceManager.updateService(serviceId, updateServiceFields)
-
-        if (!updatedService) throw new NotFoundError('Servicio no encontrado')
-
-        return ApiResponse.sendUpdated(response, updatedService, 'Servicio actualizado correctamente')
-    }
-
-    delete = async (request, response) => {
-        const serviceId = Number(request.params.sid)
-        const deletedService = await this.serviceManager.deleteService(serviceId)
-
-        if (!deletedService) throw new NotFoundError('Servicio no encontrado')
-
-        return ApiResponse.sendDeleted(response, deletedService, 'Servicio eliminado correctamente')
-    }
+    return ApiResponse.sendDeleted(
+      response,
+      deletedService,
+      "Servicio eliminado correctamente",
+    );
+  };
 }
-
-

@@ -68,7 +68,6 @@ export default class ServiceManager {
   async updateService(idService, updatedServiceData) {
     const searchedService = await this.getServiceById(idService);
 
-    console.log(searchedService);
 
     if (!searchedService) {
       return { payload: searchedService, status: "notOk" };
@@ -111,3 +110,4 @@ export default class ServiceManager {
   //     return idService;
   //   }
 }
+

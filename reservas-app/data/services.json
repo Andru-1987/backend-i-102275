@@ -88,5 +88,14 @@
     "price": 5000,
     "category": "Bienestar",
     "available": true
+  },
+  {
+    "name": "Servicio de prueba false",
+    "description": "test",
+    "duration": 60,
+    "price": 12312312,
+    "category": "Estetica",
+    "available": true,
+    "id": 11
   }
 ]

@@ -1,29 +1,20 @@
 [
   {
-    "id": 1,
-    "clientName": "Martin Alberti",
-    "clientEmail": "martin@mail.com",
+    "clientName": "de prueba",
+    "clientEmail": "Creado durante la clase",
     "date": "30-11-2026",
-    "time": "10:30",
+    "time": "15000",
     "status": "pending",
     "services": [
       {
-        "service": 1,
-        "quantity": 4
+        "service": 3,
+        "quantity": 2
       },
       {
-        "service": 3,
-        "quantity": 1
+        "service": 4,
+        "quantity": 3
       }
-    ]
-  },
-  {
-    "id": 2,
-    "clientName": "Sebastian Ortega",
-    "clientEmail": "sebastian@mail.com",
-    "date": "30-11-2026",
-    "time": "10:00",
-    "status": "pending",
-    "services": []
+    ],
+    "id": 1
   }
 ]
