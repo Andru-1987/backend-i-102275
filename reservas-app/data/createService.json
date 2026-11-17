@@ -1,0 +1,8 @@
+{
+    "name": "Limpieza facial profunda",
+    "description": "Tratamiento de hidratación y extracción de impurezas",
+    "duration": 60,
+    "price": 7500,
+    "category": "Estetica",
+    "available": true
+}

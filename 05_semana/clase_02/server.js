@@ -1,6 +1,8 @@
 import app from './app.js'
 import config from './src/config/env.config.js'
+import mongoConnect  from '../../reservas-app/src/tools/mongo.connection.js'
 
+mongoConnect()
 
 app.listen(
     config.port,
