@@ -1,4 +1,3 @@
-import mongoose from 'mongoose'
 import ServiceModel from '../models/service.model.js'
 
 export default class ServiceMongoDAO {

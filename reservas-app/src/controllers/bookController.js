@@ -33,15 +33,15 @@ export default class BookingController {
   };
 
   create = async (request, response) => {
-   const newBooking = await this.bookignsService.createBooking(request.body)
-   return ApiResponse.sendSuccess(response, newBooking, "Reserva creada correctamente")
+    const newBooking = await this.bookignsService.createBooking(request.body)
+    return ApiResponse.sendSuccess(response, newBooking, "Reserva creada correctamente")
   };
 
   addServiceToBooking = async (request, response) => {
-    const bookingId = Number(request.params.bid);
-    const serviceId = Number(request.params.sid);
+    const bookingId = request.params.bid;
+    const serviceId = request.params.sid;
 
-    const booking =  await this.bookignsService.addServiceToBooking(bookingId,serviceId)
+    const booking = await this.bookignsService.addServiceToBooking(bookingId, serviceId)
     return ApiResponse.sendSuccess(response, booking, "Servicio agregado a la reserva correctamente")
   };
 }
